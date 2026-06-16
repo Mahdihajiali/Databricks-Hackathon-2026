@@ -8,7 +8,6 @@ import {
   SheetTitle,
 } from '@databricks/appkit-ui/react';
 import { Menu } from 'lucide-react';
-import { AnalyticsPage } from './pages/analytics/AnalyticsPage';
 import { LakebasePage } from './pages/lakebase/LakebasePage';
 import { GeniePage } from './pages/genie/GeniePage';
 
@@ -31,14 +30,11 @@ type NavLinkClassFn = (props: { isActive: boolean }) => string;
 function NavLinks({ className, linkClass, onClick }: { className?: string; linkClass: NavLinkClassFn; onClick?: () => void }) {
   return (
     <nav className={className}>
-      <NavLink to="/analytics" className={linkClass} onClick={onClick}>
-        Analytics
-      </NavLink>
       <NavLink to="/lakebase" className={linkClass} onClick={onClick}>
-        Lakebase
+        Data Readiness Desk
       </NavLink>
       <NavLink to="/genie" className={linkClass} onClick={onClick}>
-        Genie
+        Referral Copilot
       </NavLink>
     </nav>
   );
@@ -82,7 +78,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: '/', element: <Navigate to="/lakebase" replace /> },
-      { path: '/analytics', element: <AnalyticsPage /> },
+      { path: '/analytics', element: <Navigate to="/lakebase" replace /> },
       { path: '/lakebase', element: <LakebasePage /> },
       { path: '/genie', element: <GeniePage /> },
     ],

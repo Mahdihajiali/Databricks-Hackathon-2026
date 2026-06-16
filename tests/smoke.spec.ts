@@ -6,7 +6,6 @@ import { join } from 'node:path';
 const APP_CONFIG = {
   name: 'CareTrust',
   plugins: [
-    'analytics',
     'lakebase',
     'genie',
   ],
@@ -19,18 +18,13 @@ interface PluginPage {
 }
 
 const PLUGIN_PAGES: Record<string, PluginPage> = {
-  analytics: {
-    navLabel: 'Analytics',
-    path: '/analytics',
-    expectedTexts: ['SQL Query Result', 'Sales Data Filter'],
-  },
   lakebase: {
-    navLabel: 'Lakebase',
+    navLabel: 'Data Readiness Desk',
     path: '/lakebase',
     expectedTexts: ['Data Readiness Desk', 'Queued for review'],
   },
   genie: {
-    navLabel: 'Genie',
+    navLabel: 'Referral Copilot',
     path: '/genie',
     expectedTexts: ['Referral Copilot', 'emergency surgery near Patna'],
   },
@@ -56,6 +50,7 @@ test('smoke test - app loads and displays default page', async ({ page }) => {
 
   await expect(page.getByRole('link', { name: 'Home' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Files' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Analytics' })).toHaveCount(0);
   for (const [, plugin] of enabledPages) {
     await expect(page.getByRole('link', { name: plugin.navLabel })).toBeVisible();
   }

@@ -6,5 +6,7 @@ env:
     valueFrom: files
   - name: DATABRICKS_GENIE_SPACE_ID
     valueFrom: genie-space
+  - name: DATABRICKS_REFERRAL_LLM_ENDPOINT
+    valueFrom: referral-llm
   - name: LAKEBASE_ENDPOINT
     valueFrom: postgres

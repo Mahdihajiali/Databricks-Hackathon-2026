@@ -12,6 +12,8 @@ variables:
     description: Default Genie Space ID
   genie_space_name:
     description: Genie Space display name
+  referral_llm_endpoint:
+    description: Databricks Model Serving endpoint used to expand care and location search terms for Referral Copilot
   postgres_branch:
     description: Full Lakebase Postgres branch resource name. Obtain by running `databricks postgres list-branches {project-name}`, select the desired item from the output array and use its .name value. Requires the project resource name.
   postgres_database:
@@ -27,6 +29,7 @@ resources:
       source_code_path: ./
       user_api_scopes:
         - dashboards.genie
+        - serving.serving-endpoints
         - files.files
 
       # The resources which this app has access to.
@@ -45,6 +48,10 @@ resources:
             name: ${var.genie_space_name}
             space_id: ${var.genie_space_id}
             permission: CAN_RUN
+        - name: referral-llm
+          serving_endpoint:
+            name: ${var.referral_llm_endpoint}
+            permission: CAN_QUERY
         - name: postgres
           postgres:
             branch: ${var.postgres_branch}
@@ -63,6 +70,7 @@ targets:
       files_id: workspace.default.myvol
       genie_space_id: 01f16933c2201d569fdc4cd530503b30
       genie_space_name: India Health and Facility Insights
+      referral_llm_endpoint: databricks-meta-llama-3-3-70b-instruct
       postgres_branch: projects/mylakebase/branches/production
       postgres_database: projects/mylakebase/branches/production/databases/databricks-postgres
       postgres_project: projects/mylakebase
